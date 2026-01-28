@@ -34,6 +34,12 @@ jobs:
           -validity 10000 \
           -dname "CN=ps3netsrv,O=Android,C=CL"
 
+      - name: Extract Android project
+        run: |
+          cd _Projects_/ps3netsrv/bins/Android
+          unzip ps3netsrv-android-src_0.5alpha.zip
+          ls
+
       - name: Build signed APK
         env:
           ANDROID_KEYSTORE: release.keystore
@@ -41,9 +47,9 @@ jobs:
           KEY_ALIAS: ps3netsrv
           KEY_PASSWORD: android
         run: |
+          cd _Projects_/ps3netsrv/bins/Android/ps3netsrv-android-src
           chmod +x gradlew
           ./gradlew assembleRelease
-
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
